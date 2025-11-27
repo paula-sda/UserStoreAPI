@@ -1,19 +1,16 @@
 import * as express from "express";
-import * as path from "path";
+import userRoutes from "./endpoints/users";
 
 const app = express();
-const port = parseInt(process.env.PORT) || process.argv[3] || 8080;
+const port = parseInt(process.env.PORT) || 8080;
 
-app.use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs');
+app.use(express.json());
+
+//Routes
+app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => {
-  res.render('index');
-});
-
-app.get('/api', (req, res) => {
-  res.json({"msg": "Hello world"});
+  res.send('API funcionando');
 });
 
 app.listen(port, () => {
